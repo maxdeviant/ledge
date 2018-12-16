@@ -1,8 +1,8 @@
-CREATE TABLE ledger (
+CREATE TABLE project (
     id UUID PRIMARY KEY,
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     name TEXT NOT NULL
 );
 
-SELECT diesel_manage_updated_at('ledger');
+SELECT diesel_manage_updated_at('project');
