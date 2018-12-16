@@ -10,7 +10,7 @@ use crate::graphql::{Database, Mutation, Query, Schema};
 
 #[get("/graphiql")]
 fn graphiql() -> Html<String> {
-    graphiql_source("/graphiql")
+    graphiql_source("/graphql")
 }
 
 fn execute_graphql_request<'a>(
