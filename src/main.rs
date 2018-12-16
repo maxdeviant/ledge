@@ -10,6 +10,7 @@ extern crate rocket;
 extern crate rocket_contrib;
 
 mod database;
+mod domain;
 mod graphql;
 mod routes;
 
