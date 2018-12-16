@@ -1,0 +1,6 @@
+# Keep it secret, keep it safe.
+.env
+
+/target
+**/*.rs.bk
+Cargo.lock
