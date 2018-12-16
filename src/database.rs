@@ -1,3 +1,7 @@
+mod models;
+
+pub use self::models::*;
+
 use rocket_contrib::databases::diesel;
 
 pub mod schema;
