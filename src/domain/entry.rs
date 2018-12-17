@@ -1,12 +1,17 @@
 use chrono::{DateTime, Duration, Utc};
+use serde_derive::{Deserialize, Serialize};
 use uuid::Uuid;
 
 use super::ProjectId;
 
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub struct EntryId(Uuid);
 
 impl EntryId {
+    pub fn new() -> Self {
+        Self(Uuid::new_v4())
+    }
+
     pub fn value(&self) -> Uuid {
         self.0
     }
@@ -18,26 +23,26 @@ impl From<Uuid> for EntryId {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Entry {
     pub id: EntryId,
     pub kind: EntryKind,
     pub timestamp: DateTime<Utc>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub enum EntryKind {
     Event(EventEntry),
     ProjectHeadway(ProjectHeadwayEntry),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct EventEntry {
     pub name: String,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct ProjectHeadwayEntry {
     pub project_id: ProjectId,
-    pub time_spent: Duration,
+    pub hours_spent: f64,
 }

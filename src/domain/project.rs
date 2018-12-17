@@ -1,10 +1,15 @@
 use chrono::{DateTime, Utc};
+use serde_derive::{Deserialize, Serialize};
 use uuid::Uuid;
 
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub struct ProjectId(Uuid);
 
 impl ProjectId {
+    pub fn new() -> Self {
+        Self(Uuid::new_v4())
+    }
+
     pub fn value(&self) -> Uuid {
         self.0
     }
@@ -16,7 +21,7 @@ impl From<Uuid> for ProjectId {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Project {
     pub id: ProjectId,
     pub name: String,
@@ -25,7 +30,7 @@ pub struct Project {
 }
 
 /// The status of a [`Project`].
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub enum ProjectStatus {
     InProgress,
     Paused(DateTime<Utc>),

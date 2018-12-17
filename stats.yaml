@@ -1,0 +1,13 @@
+---
+projects:
+  - id: 401daae9-a9ee-4022-b722-a7ee9a810fdd
+    name: scribe
+    status: InProgress
+    started_at: "2018-12-16T12:00:00Z"
+entries:
+  - id: 698908e0-b9a3-4727-bb1f-d43c3c4a0369
+    kind:
+      ProjectHeadway:
+        project_id: 401daae9-a9ee-4022-b722-a7ee9a810fdd
+        hours_spent: 4.0
+    timestamp: "2018-12-16T12:00:00Z"
