@@ -26,11 +26,14 @@ impl From<Uuid> for EntryId {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Entry {
     pub id: EntryId,
+
+    #[serde(flatten)]
     pub kind: EntryKind,
     pub timestamp: DateTime<Utc>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(tag = "kind")]
 pub enum EntryKind {
     Event(EventEntry),
     ProjectHeadway(ProjectHeadwayEntry),
