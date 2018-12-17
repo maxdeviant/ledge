@@ -1,4 +1,5 @@
 #![feature(proc_macro_hygiene, decl_macro)]
+#![feature(try_from)]
 
 #[macro_use]
 extern crate diesel;
