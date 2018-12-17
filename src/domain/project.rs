@@ -1,8 +1,20 @@
-use uuid::Uuid;
 use chrono::{DateTime, Utc};
+use uuid::Uuid;
 
 #[derive(Debug)]
 pub struct ProjectId(Uuid);
+
+impl ProjectId {
+    pub fn value(&self) -> Uuid {
+        self.0
+    }
+}
+
+impl From<Uuid> for ProjectId {
+    fn from(uuid: Uuid) -> Self {
+        Self(uuid)
+    }
+}
 
 #[derive(Debug)]
 pub struct Project {

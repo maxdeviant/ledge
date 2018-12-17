@@ -6,6 +6,18 @@ use super::ProjectId;
 #[derive(Debug)]
 pub struct EntryId(Uuid);
 
+impl EntryId {
+    pub fn value(&self) -> Uuid {
+        self.0
+    }
+}
+
+impl From<Uuid> for EntryId {
+    fn from(uuid: Uuid) -> Self {
+        Self(uuid)
+    }
+}
+
 #[derive(Debug)]
 pub struct Entry {
     pub id: EntryId,
