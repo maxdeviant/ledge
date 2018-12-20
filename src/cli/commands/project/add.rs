@@ -1,12 +1,10 @@
-use std::fs::File;
-use std::io::prelude::*;
-
 use chrono::prelude::*;
 use clap::{App, Arg, ArgMatches, SubCommand};
 
 use crate::cli::command::Command;
 use crate::config::Config;
-use crate::core::{Ledger, Project, ProjectId, ProjectStatus};
+use crate::core::{Project, ProjectId, ProjectStatus};
+use crate::util::{load_ledger, save_ledger};
 
 pub struct AddCommand {}
 
@@ -24,13 +22,7 @@ impl Command for AddCommand {
     fn exec(config: &mut Config, args: &ArgMatches<'_>) -> Result<(), &'static str> {
         let project_name = args.value_of("name").expect("No project name");
 
-        let mut ledger_file =
-            File::open(config.root_dir.join(config.current_ledger.clone())).unwrap();
-        let mut contents = String::new();
-        ledger_file.read_to_string(&mut contents).unwrap();
-
-        let mut ledger: Ledger =
-            serde_json::from_str(&contents).expect("Failed to parse ledger file");
+        let mut ledger = load_ledger(&config).unwrap();
 
         ledger.projects.push(Project {
             id: ProjectId::new(),
@@ -41,11 +33,7 @@ impl Command for AddCommand {
             started_at: Utc::now(),
         });
 
-        let mut ledger_file =
-            File::create(config.root_dir.join(config.current_ledger.clone())).unwrap();
-        ledger_file
-            .write_all(&serde_json::to_string_pretty(&ledger).unwrap().into_bytes())
-            .unwrap();
+        save_ledger(&config, &ledger).unwrap();
 
         Ok(())
     }

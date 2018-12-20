@@ -6,6 +6,7 @@ use clap::{App, ArgMatches, SubCommand};
 use crate::cli::command::Command;
 use crate::config::Config;
 use crate::core::Ledger;
+use crate::util::load_ledger;
 
 pub struct ListCommand {}
 
@@ -22,7 +23,7 @@ impl Command for ListCommand {
         let mut contents = String::new();
         ledger_file.read_to_string(&mut contents).unwrap();
 
-        let ledger: Ledger = serde_json::from_str(&contents).expect("Failed to parse ledger file");
+        let ledger: Ledger = load_ledger(&config).unwrap();
 
         println!("Projects:");
 

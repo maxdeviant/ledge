@@ -4,6 +4,7 @@ extern crate clap;
 mod cli;
 mod config;
 mod core;
+mod util;
 
 use std::fs::File;
 use std::io::prelude::*;
@@ -28,8 +29,6 @@ fn main() -> std::io::Result<()> {
     config_file.read_to_string(&mut contents)?;
 
     let mut config: Config = toml::from_str(&contents).expect("Failed to parse config file");
-
-    println!("config: {:?}", config);
 
     cli::exec(&mut config, &matches).unwrap();
 
