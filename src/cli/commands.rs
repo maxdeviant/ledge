@@ -1,1 +1,3 @@
-pub mod project;
+mod project;
+
+pub use self::project::ProjectCommand;

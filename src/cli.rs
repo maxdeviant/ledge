@@ -3,7 +3,10 @@ mod commands;
 
 pub use self::command::Command;
 
-use clap::{App, Arg};
+use clap::{App, Arg, ArgMatches};
+
+use self::commands::ProjectCommand;
+use crate::config::Config;
 
 pub fn app() -> App<'static, 'static> {
     App::new("scribe")
@@ -16,5 +19,13 @@ pub fn app() -> App<'static, 'static> {
                 .value_name("FILE")
                 .takes_value(true),
         )
-        .subcommand(commands::project::cli())
+        .subcommand(ProjectCommand::cli())
+}
+
+pub fn exec(config: &mut Config, args: &ArgMatches<'_>) -> Result<(), &'static str> {
+    match args.subcommand() {
+        ("project", Some(args)) => ProjectCommand::exec(config, args),
+        ("", None) => Ok(()),
+        _ => unreachable!(),
+    }
 }
