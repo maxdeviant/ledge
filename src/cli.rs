@@ -1,4 +1,7 @@
+mod command;
 mod commands;
+
+pub use self::command::Command;
 
 use clap::{App, Arg};
 
