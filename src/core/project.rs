@@ -1,5 +1,6 @@
 use chrono::{DateTime, Utc};
 use serde_derive::{Deserialize, Serialize};
+use url::Url;
 use uuid::Uuid;
 
 #[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
@@ -25,7 +26,10 @@ impl From<Uuid> for ProjectId {
 pub struct Project {
     pub id: ProjectId,
     pub name: String,
+    pub description: Option<String>,
     pub status: ProjectStatus,
+    #[serde(with = "url_serde")]
+    pub url: Option<Url>,
     pub started_at: DateTime<Utc>,
 }
 

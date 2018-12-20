@@ -34,7 +34,9 @@ impl Command for AddCommand {
         log.projects.push(Project {
             id: ProjectId::new(),
             name: project_name.to_string(),
+            description: None,
             status: ProjectStatus::InProgress,
+            url: None,
             started_at: Utc::now(),
         });
 
