@@ -29,7 +29,7 @@ impl Command for AddCommand {
         let mut contents = String::new();
         log_file.read_to_string(&mut contents).unwrap();
 
-        let mut log: Log = serde_yaml::from_str(&contents).expect("Failed to parse log file");
+        let mut log: Log = serde_json::from_str(&contents).expect("Failed to parse log file");
 
         log.projects.push(Project {
             id: ProjectId::new(),
@@ -42,7 +42,7 @@ impl Command for AddCommand {
 
         let mut log_file = File::create(config.root_dir.join(config.log_file.clone())).unwrap();
         log_file
-            .write_all(&serde_yaml::to_string(&log).unwrap().into_bytes())
+            .write_all(&serde_json::to_string_pretty(&log).unwrap().into_bytes())
             .unwrap();
 
         Ok(())
