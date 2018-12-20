@@ -2,28 +2,23 @@
 extern crate clap;
 
 mod commands;
+mod config;
 mod core;
 
 use std::fs::File;
 use std::io::prelude::*;
-use std::path::PathBuf;
 
 use chrono::prelude::*;
 use dotenv::dotenv;
 use serde_derive::{Deserialize, Serialize};
 
-use self::core::{Entry, Project, ProjectId, ProjectStatus};
+use crate::config::Config;
+use crate::core::{Entry, Project, ProjectId, ProjectStatus};
 
 #[derive(Serialize, Deserialize)]
 pub struct Log {
     pub projects: Vec<Project>,
     pub entries: Vec<Entry>,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct Config {
-    pub root_dir: PathBuf,
-    pub log_file: String,
 }
 
 fn main() -> std::io::Result<()> {
