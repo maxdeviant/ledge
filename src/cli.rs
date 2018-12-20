@@ -13,6 +13,7 @@ pub fn app() -> App<'static, 'static> {
     App::new(crate_name!())
         .version(crate_version!())
         .author(crate_authors!())
+        .about(crate_description!())
         .arg(
             Arg::with_name("config")
                 .short("c")
