@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate clap;
+
 mod domain;
 
 use std::fs::File;
@@ -22,8 +25,8 @@ fn main() {
     dotenv().ok();
 
     let matches = App::new("scribe")
-        .version("0.1.0")
-        .author("Marshall Bowers <elliott.codes@gmail.com>")
+        .version(crate_version!())
+        .author(crate_authors!())
         .arg(
             Arg::with_name("config")
                 .short("c")
