@@ -1,19 +1,4 @@
-#![feature(proc_macro_hygiene, decl_macro)]
-#![feature(try_from)]
-
-#[macro_use]
-extern crate diesel;
-#[macro_use]
-extern crate juniper;
-#[macro_use]
-extern crate rocket;
-#[macro_use]
-extern crate rocket_contrib;
-
-mod database;
 mod domain;
-mod graphql;
-mod routes;
 
 use std::fs::File;
 use std::io::prelude::*;
@@ -22,7 +7,6 @@ use chrono::prelude::*;
 use dotenv::dotenv;
 use serde_derive::{Deserialize, Serialize};
 
-use self::database::DatabaseConnection;
 use self::domain::{
     Entry, EntryId, EntryKind, Project, ProjectHeadwayEntry, ProjectId, ProjectStatus,
 };
