@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate clap;
 
-mod commands;
+mod cli;
 mod config;
 mod core;
 
@@ -24,7 +24,7 @@ pub struct Log {
 fn main() -> std::io::Result<()> {
     dotenv().ok();
 
-    let matches = commands::cli().get_matches();
+    let matches = cli::app().get_matches();
 
     let default_config_path = dirs::home_dir().unwrap().join(".scribe");
 
