@@ -3,7 +3,7 @@ use clap::{App, ArgMatches, SubCommand};
 
 use crate::cli::Command;
 use crate::config::Config;
-use crate::core::{ProjectId, Session};
+use crate::core::Session;
 use crate::util::{load_status, save_status};
 
 pub struct StartCommand {}
@@ -16,12 +16,16 @@ impl Command for StartCommand {
     fn exec(config: &mut Config, _args: &ArgMatches<'_>) -> Result<(), &'static str> {
         let mut status = load_status(&config).unwrap();
 
-        status.sessions.push(Session {
-            project_id: ProjectId::new(),
-            started_at: Utc::now(),
-        });
+        if let Some(current_project_id) = status.current_project {
+            status.sessions.push(Session {
+                project_id: current_project_id,
+                started_at: Utc::now(),
+            });
 
-        save_status(&config, &status).unwrap();
+            save_status(&config, &status).unwrap();
+        } else {
+            println!("Please select a project before starting a session")
+        }
 
         Ok(())
     }

@@ -5,6 +5,7 @@ use super::ProjectId;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Status {
+    pub current_project: Option<ProjectId>,
     pub sessions: Vec<Session>,
 }
 
