@@ -9,16 +9,8 @@ use std::fs::File;
 use std::io::prelude::*;
 
 use dotenv::dotenv;
-use serde_derive::{Deserialize, Serialize};
 
 use crate::config::Config;
-use crate::core::{Entry, Project};
-
-#[derive(Serialize, Deserialize)]
-pub struct Log {
-    pub projects: Vec<Project>,
-    pub entries: Vec<Entry>,
-}
 
 fn main() -> std::io::Result<()> {
     dotenv().ok();

@@ -6,8 +6,7 @@ use clap::{App, Arg, ArgMatches, SubCommand};
 
 use crate::cli::command::Command;
 use crate::config::Config;
-use crate::core::{Project, ProjectId, ProjectStatus};
-use crate::Log;
+use crate::core::{Ledger, Project, ProjectId, ProjectStatus};
 
 pub struct AddCommand {}
 
@@ -25,13 +24,15 @@ impl Command for AddCommand {
     fn exec(config: &mut Config, args: &ArgMatches<'_>) -> Result<(), &'static str> {
         let project_name = args.value_of("name").expect("No project name");
 
-        let mut log_file = File::open(config.root_dir.join(config.log_file.clone())).unwrap();
+        let mut ledger_file =
+            File::open(config.root_dir.join(config.current_ledger.clone())).unwrap();
         let mut contents = String::new();
-        log_file.read_to_string(&mut contents).unwrap();
+        ledger_file.read_to_string(&mut contents).unwrap();
 
-        let mut log: Log = serde_json::from_str(&contents).expect("Failed to parse log file");
+        let mut ledger: Ledger =
+            serde_json::from_str(&contents).expect("Failed to parse ledger file");
 
-        log.projects.push(Project {
+        ledger.projects.push(Project {
             id: ProjectId::new(),
             name: project_name.to_string(),
             description: None,
@@ -40,9 +41,10 @@ impl Command for AddCommand {
             started_at: Utc::now(),
         });
 
-        let mut log_file = File::create(config.root_dir.join(config.log_file.clone())).unwrap();
-        log_file
-            .write_all(&serde_json::to_string_pretty(&log).unwrap().into_bytes())
+        let mut ledger_file =
+            File::create(config.root_dir.join(config.current_ledger.clone())).unwrap();
+        ledger_file
+            .write_all(&serde_json::to_string_pretty(&ledger).unwrap().into_bytes())
             .unwrap();
 
         Ok(())

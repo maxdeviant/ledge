@@ -1,6 +1,8 @@
 use serde_derive::{Deserialize, Serialize};
 use uuid::Uuid;
 
+use super::{Entry, Project};
+
 #[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
 pub struct LedgerId(Uuid);
 
@@ -20,8 +22,16 @@ impl From<Uuid> for LedgerId {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Ledger {
-    pub id: LedgerId,
-    pub name: String,
+    /// The ID of the ledger.
+    #[serde(default)]
+    pub id: Option<LedgerId>,
+    /// The name of the ledger.
+    #[serde(default)]
+    pub name: Option<String>,
+    /// The list of projects in the ledger.
+    pub projects: Vec<Project>,
+    /// The list of entries in the ledger.
+    pub entries: Vec<Entry>,
 }

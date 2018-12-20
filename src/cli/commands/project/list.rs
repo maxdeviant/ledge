@@ -5,7 +5,7 @@ use clap::{App, ArgMatches, SubCommand};
 
 use crate::cli::command::Command;
 use crate::config::Config;
-use crate::Log;
+use crate::core::Ledger;
 
 pub struct ListCommand {}
 
@@ -17,15 +17,16 @@ impl Command for ListCommand {
     }
 
     fn exec(config: &mut Config, _args: &ArgMatches<'_>) -> Result<(), &'static str> {
-        let mut log_file = File::open(config.root_dir.join(config.log_file.clone())).unwrap();
+        let mut ledger_file =
+            File::open(config.root_dir.join(config.current_ledger.clone())).unwrap();
         let mut contents = String::new();
-        log_file.read_to_string(&mut contents).unwrap();
+        ledger_file.read_to_string(&mut contents).unwrap();
 
-        let log: Log = serde_json::from_str(&contents).expect("Failed to parse log file");
+        let ledger: Ledger = serde_json::from_str(&contents).expect("Failed to parse ledger file");
 
         println!("Projects:");
 
-        for project in &log.projects {
+        for project in &ledger.projects {
             println!("  - {}", project.name);
         }
 
