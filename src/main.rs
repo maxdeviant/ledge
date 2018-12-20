@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate clap;
 
-mod domain;
+mod core;
 
 use std::fs::File;
 use std::io::prelude::*;
@@ -12,9 +12,7 @@ use clap::{App, AppSettings, Arg, SubCommand};
 use dotenv::dotenv;
 use serde_derive::{Deserialize, Serialize};
 
-use self::domain::{
-    Entry, EntryId, EntryKind, Project, ProjectHeadwayEntry, ProjectId, ProjectStatus,
-};
+use self::core::{Entry, Project, ProjectId, ProjectStatus};
 
 #[derive(Serialize, Deserialize)]
 pub struct Log {
