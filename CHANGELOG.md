@@ -9,7 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added a `.status` file for storing the current state
 - Added `project list` command
+- Added `project select` command
+- Added `start` command
+- Added `end` command
 - Added `migrate` command
 
 ## [0.1.0] - 2018-12-20
