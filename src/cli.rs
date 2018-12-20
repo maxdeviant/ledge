@@ -9,7 +9,7 @@ use self::commands::ProjectCommand;
 use crate::config::Config;
 
 pub fn app() -> App<'static, 'static> {
-    App::new("scribe")
+    App::new(crate_name!())
         .version(crate_version!())
         .author(crate_authors!())
         .arg(

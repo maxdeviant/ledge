@@ -1,12 +1,9 @@
 #
-# Scribe
+# Ledge
 #
 
 # Keep it secret, keep it safe.
 .env
-
-# Config file for testing.
-.scribe
 
 #
 # Rust

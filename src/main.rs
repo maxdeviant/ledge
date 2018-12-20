@@ -25,7 +25,7 @@ fn main() -> std::io::Result<()> {
 
     let matches = cli::app().get_matches();
 
-    let default_config_path = dirs::home_dir().unwrap().join(".scribe");
+    let default_config_path = dirs::home_dir().unwrap().join(".ledge");
 
     let config_path = matches
         .value_of("config")
