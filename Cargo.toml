@@ -1,8 +1,15 @@
 [package]
 name = "ledge"
 version = "0.1.0"
+description = "A time tracking CLI."
+repository = "https://github.com/maxdeviant/ledge"
+keywords = ["time", "tracking"]
 authors = ["Marshall Bowers <elliott.codes@gmail.com>"]
+license = "MIT"
 edition = "2018"
+
+[badges]
+maintenance = { status = "actively-developed" }
 
 [dependencies]
 chrono = { version = "0.4", features = ["serde"] }
