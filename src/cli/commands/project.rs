@@ -11,6 +11,7 @@ pub struct ProjectCommand {}
 impl Command for ProjectCommand {
     fn cli() -> App<'static, 'static> {
         SubCommand::with_name("project")
+            .about("Manages projects in the ledger")
             .setting(AppSettings::SubcommandRequiredElseHelp)
             .subcommand(AddCommand::cli())
     }

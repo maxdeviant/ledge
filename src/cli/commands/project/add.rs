@@ -13,7 +13,13 @@ pub struct AddCommand {}
 
 impl Command for AddCommand {
     fn cli() -> App<'static, 'static> {
-        SubCommand::with_name("add").arg(Arg::with_name("name").required(true))
+        SubCommand::with_name("add")
+            .about("Adds a new project to the ledger")
+            .arg(
+                Arg::with_name("name")
+                    .help("The name of the project")
+                    .required(true),
+            )
     }
 
     fn exec(config: &mut Config, args: &ArgMatches<'_>) -> Result<(), &'static str> {
