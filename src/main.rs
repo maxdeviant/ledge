@@ -1,6 +1,7 @@
 #[macro_use]
 extern crate clap;
 
+mod commands;
 mod core;
 
 use std::fs::File;
@@ -8,7 +9,6 @@ use std::io::prelude::*;
 use std::path::PathBuf;
 
 use chrono::prelude::*;
-use clap::{App, AppSettings, Arg, SubCommand};
 use dotenv::dotenv;
 use serde_derive::{Deserialize, Serialize};
 
@@ -29,24 +29,7 @@ pub struct Config {
 fn main() -> std::io::Result<()> {
     dotenv().ok();
 
-    let matches = App::new("scribe")
-        .version(crate_version!())
-        .author(crate_authors!())
-        .arg(
-            Arg::with_name("config")
-                .short("c")
-                .long("config")
-                .value_name("FILE")
-                .takes_value(true),
-        )
-        .subcommand(
-            SubCommand::with_name("project")
-                .setting(AppSettings::SubcommandRequiredElseHelp)
-                .subcommand(
-                    SubCommand::with_name("add").arg(Arg::with_name("name").required(true)),
-                ),
-        )
-        .get_matches();
+    let matches = commands::cli().get_matches();
 
     let default_config_path = dirs::home_dir().unwrap().join(".scribe");
 
