@@ -4,7 +4,7 @@ use uuid::Uuid;
 
 use super::ProjectId;
 
-#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Copy, Clone, Serialize, Deserialize)]
 pub struct EntryId(Uuid);
 
 impl EntryId {
