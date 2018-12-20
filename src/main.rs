@@ -5,9 +5,10 @@ mod domain;
 
 use std::fs::File;
 use std::io::prelude::*;
+use std::path::PathBuf;
 
 use chrono::prelude::*;
-use clap::{App, Arg};
+use clap::{App, AppSettings, Arg, SubCommand};
 use dotenv::dotenv;
 use serde_derive::{Deserialize, Serialize};
 
@@ -21,7 +22,12 @@ pub struct Log {
     pub entries: Vec<Entry>,
 }
 
-fn main() {
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Config {
+    pub root_dir: PathBuf,
+}
+
+fn main() -> std::io::Result<()> {
     dotenv().ok();
 
     let matches = App::new("scribe")
@@ -34,9 +40,34 @@ fn main() {
                 .value_name("FILE")
                 .takes_value(true),
         )
+        .subcommand(
+            SubCommand::with_name("project")
+                .setting(AppSettings::SubcommandRequiredElseHelp)
+                .subcommand(
+                    SubCommand::with_name("add").arg(Arg::with_name("name").required(true)),
+                ),
+        )
         .get_matches();
 
-    let config = matches.value_of("config").unwrap_or(".scribe");
+    let default_config_path = dirs::home_dir().unwrap().join(".scribe");
 
-    println!("{}", config);
+    let config_path = matches
+        .value_of("config")
+        .unwrap_or(default_config_path.to_str().unwrap());
+
+    let mut config_file = File::open(config_path)?;
+    let mut contents = String::new();
+    config_file.read_to_string(&mut contents)?;
+
+    let config: Config = toml::from_str(&contents).unwrap();
+
+    println!("config: {:?}", config);
+
+    match matches.subcommand() {
+        ("project", Some(project_matches)) => println!("Project subcommand was used."),
+        ("", None) => (),
+        _ => unreachable!(),
+    }
+
+    Ok(())
 }
