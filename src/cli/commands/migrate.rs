@@ -5,7 +5,7 @@ use clap::{App, ArgMatches, SubCommand};
 
 use crate::cli::Command;
 use crate::config::Config;
-use crate::core::{Ledger, LedgerId};
+use crate::core::Ledger;
 
 pub struct MigrateCommand {}
 
@@ -20,16 +20,7 @@ impl Command for MigrateCommand {
         let mut contents = String::new();
         ledger_file.read_to_string(&mut contents).unwrap();
 
-        let mut ledger: Ledger =
-            serde_json::from_str(&contents).expect("Failed to parse ledger file");
-
-        if ledger.id.is_none() {
-            ledger.id = Some(LedgerId::new());
-        }
-
-        if ledger.name.is_none() {
-            ledger.name = Some(String::new());
-        }
+        let ledger: Ledger = serde_json::from_str(&contents).expect("Failed to parse ledger file");
 
         let mut ledger_file =
             File::create(config.root_dir.join(config.current_ledger.clone())).unwrap();

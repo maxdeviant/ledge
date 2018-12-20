@@ -25,11 +25,9 @@ impl From<Uuid> for LedgerId {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Ledger {
     /// The ID of the ledger.
-    #[serde(default)]
-    pub id: Option<LedgerId>,
+    pub id: LedgerId,
     /// The name of the ledger.
-    #[serde(default)]
-    pub name: Option<String>,
+    pub name: String,
     /// The list of projects in the ledger.
     pub projects: Vec<Project>,
     /// The list of entries in the ledger.
