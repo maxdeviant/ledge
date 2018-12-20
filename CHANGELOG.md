@@ -14,5 +14,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `project` subcommand
 - Added `project add` command
 
-[unreleased]: https://github.com/maxdeviant/adventurous/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/maxdeviant/adventurous/compare/d9795a2...v0.1.0
+[unreleased]: https://github.com/maxdeviant/ledge/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/maxdeviant/ledge/compare/d9795a2...v0.1.0
